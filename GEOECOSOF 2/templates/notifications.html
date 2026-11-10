@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block title %}Avisos{% endblock %}
+{% block content %}<div class="page-heading"><div><span class="eyebrow">CENTRO DE AVISOS</span><h2>Notificaciones</h2><p>Aquí aparecen los cambios y novedades de tus solicitudes.</p></div></div>
+<div class="content-card">{% for n in notifications %}<div class="notification-row"><div class="notification-icon">🔔</div><div><b>{{ n.mensaje }}</b><small>{{ n.creado_en }}</small></div></div>{% else %}<div class="empty-state">No tienes notificaciones todavía.</div>{% endfor %}</div>{% endblock %}

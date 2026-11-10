@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Mapa{% endblock %}
+{% block head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">{% endblock %}
+{% block content %}<div class="page-heading"><div><span class="eyebrow">RECORRIDOS</span><h2>Mapa de materiales disponibles</h2><p>{{ total }} solicitudes disponibles. Los puntos requieren coordenadas para aparecer en el mapa.</p></div></div>
+<div id="map" class="map-box"></div><div class="content-card mt-3"><b>Consejo:</b> abre OpenStreetMap o Google Maps para consultar las coordenadas del punto y registrarlas al publicar el material.</div>{% endblock %}
+{% block scripts %}<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+const points={{ points|tojson }};
+const map=L.map('map').setView([8.7500,-75.8785],13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
+points.forEach(p=>L.marker([p.latitud,p.longitud]).addTo(map).bindPopup(`<b>${p.material}</b><br>${p.cantidad} ${p.unidad}<br>${p.barrio}, ${p.direccion}`));
+if(points.length){map.fitBounds(points.map(p=>[p.latitud,p.longitud]),{padding:[30,30]});}
+</script>{% endblock %}

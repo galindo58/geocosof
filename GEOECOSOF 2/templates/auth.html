@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}{{ 'Crear cuenta' if mode=='registro' else 'Ingresar' }}{% endblock %}
+{% block content %}
+<section class="auth-layout">
+ <div class="auth-visual"><div class="auth-visual-overlay"></div><div class="auth-visual-copy"><span class="section-index">GEOECOSOF · COLOMBIA</span><h1>Pequeñas acciones.<br><em>Un impacto real.</em></h1><p>Conectamos a quienes quieren reciclar con quienes hacen del aprovechamiento su trabajo.</p></div><span class="auth-photo-credit">PUBLICAR · CONECTAR · RECUPERAR</span></div>
+ <div class="auth-panel"><div class="auth-form-wrap"><a class="back-home" href="{{ url_for('index') }}">← Volver al inicio</a><span class="section-index">{{ 'COMIENZA A PARTICIPAR' if mode=='registro' else 'QUÉ BUENO TENERTE DE VUELTA' }}</span><h2>{{ 'Crea tu cuenta' if mode=='registro' else 'Inicia sesión' }}</h2><p class="auth-lead">{{ 'Regístrate para publicar materiales y conectar con la red de reciclaje.' if mode=='registro' else 'Ingresa a tu espacio para continuar.' }}</p>
+ <form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  {% if mode=='registro' %}<label class="form-label">Tipo de cuenta</label><select class="form-select mb-3" name="rol" required><option value="ciudadano">Publicador · Tengo materiales para ofrecer</option><option value="reciclador">Recolector · Busco materiales para recoger</option></select><div class="small text-muted mb-3">Las cuentas de recolector requieren verificación de administración antes de solicitar recolecciones.</div><label class="form-label">Nombre completo</label><input class="form-control mb-3" name="nombre" required maxlength="100" autocomplete="name"><label class="form-label">Teléfono <span class="optional-label">OPCIONAL</span></label><input class="form-control mb-3" name="telefono" maxlength="30" autocomplete="tel">{% endif %}
+  <label class="form-label">Correo electrónico</label><input class="form-control mb-3" type="email" name="correo" required autocomplete="email">
+  <label class="form-label">Contraseña</label><input class="form-control mb-3" type="password" name="password" required minlength="8" autocomplete="{{ 'new-password' if mode=='registro' else 'current-password' }}">
+  {% if mode=='registro' %}<label class="form-label">Confirmar contraseña</label><input class="form-control mb-3" type="password" name="confirm" required minlength="8" autocomplete="new-password">{% endif %}
+  <button class="btn btn-auth w-100">{{ 'Crear mi cuenta' if mode=='registro' else 'Ingresar a GEOECOSOF' }} <span>→</span></button>
+ </form><p class="auth-switch">{% if mode=='registro' %}¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>{% else %}¿Primera vez en GEOECOSOF? <a href="{{ url_for('register') }}">Crea tu cuenta</a>{% endif %}</p><div class="auth-secure"> <span>●</span> Tus datos se utilizan únicamente para gestionar tu cuenta.</div>
+ {% if mode=='registro' %}<p class="auth-switch mt-3">¿Eres administrador? <a href="{{ url_for('login') }}">Accede desde el inicio de sesión institucional</a>.</p>{% endif %}</div></div>
+</section>
+{% endblock %}

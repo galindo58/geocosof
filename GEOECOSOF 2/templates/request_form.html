@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}{{ 'Editar solicitud' if item else 'Publicar material' }}{% endblock %}
+{% block content %}
+<div class="form-page"><div class="content-card"><span class="eyebrow">PUNTO DE RECOLECCIÓN</span><h2>{{ 'Editar solicitud' if item else 'Publica tu material reciclable' }}</h2><p class="text-muted">Cuéntales a los recicladores qué material tienes y dónde pueden recogerlo.</p>
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<div class="row g-3">
+<div class="col-md-6"><label class="form-label">Tipo de material *</label><select class="form-select" name="material_id" required>{% for m in materiales %}<option value="{{ m.id }}" {% if item and item.material_id==m.id %}selected{% endif %}>{{ m.nombre }}</option>{% endfor %}</select></div>
+<div class="col-md-4"><label class="form-label">Cantidad aproximada *</label><input class="form-control" type="number" name="cantidad" min="0.1" step="0.1" required value="{{ item.cantidad if item else '' }}"></div>
+<div class="col-md-2"><label class="form-label">Unidad</label><select class="form-select" name="unidad"><option value="kg">kg</option><option value="bolsas" {% if item and item.unidad=='bolsas' %}selected{% endif %}>Bolsas</option><option value="unidades" {% if item and item.unidad=='unidades' %}selected{% endif %}>Unidades</option></select></div>
+<div class="col-md-6"><label class="form-label">Dirección *</label><input class="form-control" name="direccion" required placeholder="Ej. Calle  XX # XX-XX" value="{{ item.direccion if item else '' }}"></div>
+<div class="col-md-6"><label class="form-label">Departamento *</label><input class="form-control" name="departamento" required placeholder="Ej. Córdoba" value="{{ item.departamento if item else '' }}"></div>
+<div class="col-md-6"><label class="form-label">Municipio o ciudad *</label><input class="form-control" name="municipio" required placeholder="Ej. Montería" value="{{ item.municipio if item else '' }}"></div>
+<div class="col-md-6"><label class="form-label">Barrio o sector *</label><input class="form-control" name="barrio" required placeholder="Ej. La Castellana" value="{{ item.barrio if item else '' }}"></div>
+<div class="col-12"><label class="form-label">Punto de referencia</label><input class="form-control" name="referencia" placeholder="Casa de reja blanca, frente al parque..." value="{{ item.referencia if item else '' }}"></div>
+<div class="col-md-6"><label class="form-label">Fecha/hora en que estará disponible</label><input class="form-control" type="datetime-local" name="fecha_disponible" value="{{ item.fecha_disponible if item and item.fecha_disponible else '' }}"></div>
+<div class="col-md-3"><label class="form-label">Latitud (opcional)</label><input class="form-control" name="latitud" type="number" step="any" value="{{ item.latitud if item and item.latitud is not none else '' }}" placeholder="8.75"></div>
+<div class="col-md-3"><label class="form-label">Longitud (opcional)</label><input class="form-control" name="longitud" type="number" step="any" value="{{ item.longitud if item and item.longitud is not none else '' }}" placeholder="-75.88"></div>
+<div class="col-12"><label class="form-label">Información adicional</label><textarea class="form-control" name="notas" rows="3" placeholder="Describe cómo está separado o empacado el material.">{{ item.notas if item else '' }}</textarea></div>
+</div><div class="d-flex gap-2 mt-4"><button class="btn btn-green btn-lg">Guardar solicitud</button><a class="btn btn-outline-secondary btn-lg" href="{{ url_for('requests_list') }}">Cancelar</a></div>
+</form></div></div>
+{% endblock %}

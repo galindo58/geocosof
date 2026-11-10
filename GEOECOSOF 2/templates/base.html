@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102d25">
+  <meta name="description" content="GEOECOSOF conecta ciudadanos y recicladores para facilitar la recuperación de materiales aprovechables en Colombia.">
+  <title>{% block title %}GEOECOSOF{% endblock %} | GEOECOSOF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg eco-nav">
+ <div class="container">
+  <a class="navbar-brand" href="{{ url_for('index') }}"><span class="brand-mark">G</span><span>GEO<span class="brand-light">ECOSOF</span><small>COLOMBIA</small></span></a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+  <div class="collapse navbar-collapse" id="nav">
+   <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+    {% if current_user %}
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Mi panel</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('requests_list') }}">Solicitudes</a></li>
+      {% if current_user.rol in ['reciclador','admin'] %}<li class="nav-item"><a class="nav-link" href="{{ url_for('map_view') }}">Mapa</a></li><li class="nav-item"><a class="nav-link" href="{{ url_for('history') }}">Historial</a></li>{% endif %}
+      {% if current_user.rol == 'admin' %}<li class="nav-item"><a class="nav-link" href="{{ url_for('users_admin') }}">Usuarios</a></li>{% endif %}
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('notifications') }}">Avisos</a></li>
+      <li class="nav-item"><span class="nav-user">{{ current_user.nombre }}</span></li>
+      <li class="nav-item"><form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-nav-outline">Salir</button></form></li>
+    {% else %}
+      <li class="nav-item"><a class="nav-link" href="#como-funciona">Cómo funciona</a></li>
+      <li class="nav-item"><a class="nav-link" href="#impacto">Nuestro impacto</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Ingresar</a></li>
+      <li class="nav-item"><a class="btn btn-nav-primary" href="{{ url_for('register') }}">Crear una cuenta <span>↗</span></a></li>
+    {% endif %}
+   </ul>
+  </div>
+ </div>
+</nav>
+<main class="container py-4 app-main">
+ {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}
+   <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button></div>
+ {% endfor %}{% endif %}{% endwith %}
+ {% block content %}{% endblock %}
+</main>
+<footer class="eco-footer"><div class="container"><div class="footer-main"><a class="footer-brand" href="{{ url_for('index') }}"><span class="brand-mark">G</span> GEOECOSOF</a><p>Conectamos personas, recuperamos materiales y construimos una ciudad más consciente.</p><div class="footer-location">COLOMBIA</div></div><div class="footer-bottom"><span>© 2026 GEOECOSOF. Proyecto de innovación ambiental.</span><span>Separar hoy. Transformar mañana.</span></div></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

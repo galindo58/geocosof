@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% block title %}Inicio{% endblock %}
+{% block content %}
+<section class="premium-hero">
+ <div class="hero-photo" role="img" aria-label="Jornada de recuperación y clasificación de materiales reciclables"></div>
+ <div class="hero-shade"></div>
+ <div class="hero-content">
+  <div class="hero-kicker"><span></span> COLOMBIA · MUCHAS MANERAS DE SUMAR</div>
+  <h1>El cambio empieza<br>con lo que <em>separamos.</em></h1>
+  <p>Una forma más sencilla de conectar a quienes reciclan con quienes quieren darle una nueva oportunidad a sus materiales.</p>
+  <div class="hero-actions">
+   {% if current_user %}<a class="btn btn-cream btn-lg" href="{{ url_for('dashboard') }}">Ir a mi panel <span>↗</span></a>
+   {% else %}<a class="btn btn-cream btn-lg" href="{{ url_for('register') }}">Quiero participar <span>↗</span></a><a class="hero-login" href="{{ url_for('login') }}">Ya tengo una cuenta <span>→</span></a>{% endif %}
+  </div>
+  <div class="hero-caption"><span class="caption-line"></span> GEOECOSOF · COLOMBIA</div>
+ </div>
+ <div class="hero-side-note">RECUPERAR · CONECTAR · TRANSFORMAR</div>
+</section>
+<section class="intro-row" id="impacto">
+ <div class="intro-heading"><span class="section-index">01 / EL PROPÓSITO</span><h2>Un país más limpio<br>se construye <em>en equipo.</em></h2></div>
+ <div class="intro-copy"><p>GEOECOSOF acerca a los ciudadanos y a los recicladores de oficio. Publica materiales aprovechables, encuentra puntos de recolección y facilita que cada recurso siga su ciclo.</p><a class="text-link" href="{{ url_for('register') }}">Conoce cómo participar <span>↗</span></a></div>
+</section>
+<section class="impact-strip">
+ <div class="impact-label"><span class="section-index">02 / EN MOVIMIENTO</span><p>El impacto se construye<br>con acciones cotidianas.</p></div>
+ <div class="impact-number"><strong>{{ stats.solicitudes }}</strong><span>Solicitudes disponibles</span></div>
+ <div class="impact-number"><strong>{{ stats.recicladores }}</strong><span>Recicladores vinculados</span></div>
+ <div class="impact-number"><strong>{{ stats.recolecciones }}</strong><span>Recolecciones realizadas</span></div>
+ <div class="impact-number"><strong>{{ stats.kg_recogidos }} kg</strong><span>Material recuperado</span></div>
+</section>
+<section class="process-section" id="como-funciona">
+ <div class="process-head"><div><span class="section-index">03 / EL PROCESO</span><h2>Reciclar puede ser<br><em>más fácil.</em></h2></div><p>La tecnología nos ayuda a acercar las oportunidades de aprovechamiento a comunidades de todo Colombia.</p></div>
+ <div class="process-grid">
+  <article class="process-card"><div class="process-image process-one"></div><div class="process-meta"><span>01</span><span>PUBLICA</span></div><h3>Comparte lo que puedes aprovechar.</h3><p>Registra el tipo de material, la cantidad y el lugar donde está disponible.</p></article>
+  <article class="process-card"><div class="process-image process-two"></div><div class="process-meta"><span>02</span><span>CONECTA</span></div><h3>Acerca la oportunidad a un reciclador.</h3><p>Los recicladores consultan los puntos disponibles y eligen qué solicitudes atender.</p></article>
+  <article class="process-card"><div class="process-image process-three"></div><div class="process-meta"><span>03</span><span>TRANSFORMA</span></div><h3>Haz que el material siga su camino.</h3><p>La recolección se confirma y queda registrada en la plataforma.</p></article>
+ </div>
+</section>
+<section class="closing-cta"><div><span class="section-index">04 / HAGÁMOSLO POSIBLE</span><h2>Lo que hoy separas,<br>mañana <em>puede tener otra vida.</em></h2></div><a href="{{ url_for('register') }}" class="btn btn-cream btn-lg">Únete a GEOECOSOF <span>↗</span></a></section>
+{% endblock %}
